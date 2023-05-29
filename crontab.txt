@@ -1,0 +1,12 @@
+crontab -e
+
+#################### Cron Jobs ####################
+#
+# Pull the changes from the remote repository
+# At minute 5 hourly
+5 * * * * cd ~/MyAssistant && git pull https://github.com/t-shuo/MyAssistant.git
+
+#
+# Take a selfie of the top websites daily
+# At minute 20 hourly from 9 through 23
+20 9-23 * * * cd ~/MyAssistant && ~/venv/scrapy/bin/python ./selfie/main.py
