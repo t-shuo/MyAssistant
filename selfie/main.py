@@ -1,9 +1,16 @@
 
 def main(n):
     proxies = {}
-    proxies['http'] = 'socks5://' + local_settings.proxy_socks5
-    proxies['https'] = 'socks5://' + local_settings.proxy_socks5
-    r = requests.get(url, proxies=proxies)
+    try:
+        proxies['http'] = 'socks5://' + local_settings.proxy_socks5
+        proxies['https'] = 'socks5://' + local_settings.proxy_socks5
+        r = requests.get(url, proxies=proxies)
+    except Exception as e:
+        print(e)
+        proxies['http'] = 'socks5h://' + local_settings.proxy_socks5
+        proxies['https'] = 'socks5h://' + local_settings.proxy_socks5
+        r = requests.get(url, proxies=proxies)
+
     soup = BeautifulSoup(r.text, 'html.parser')
     table = soup.table
 
