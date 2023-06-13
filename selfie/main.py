@@ -1,5 +1,19 @@
+def main():
+    get_websites = False
+    sql_statement = "SELECT MAX(created_on) FROM top_websites"
+    latest_date = database.sql_execute(sql_statement)[0][0]
+    if latest_date == None:
+        get_websites = True
+    else:
+        latest_date = datetime.datetime.strptime(latest_date, '%Y-%m-%d %H:%M:%S')
+        if (datetime.datetime.now()-latest_date).days > 10:
+            get_websites = True
+    
+    if get_websites:
+        get_top_websites()
 
-def main(n):
+
+def get_top_websites():
     proxies = {}
     try:
         proxies['http'] = 'socks5://' + local_settings.proxy_socks5
@@ -22,7 +36,15 @@ def main(n):
         if website:
             top_websites.append(website)
     for i in top_websites:
-        print(i)
+        site = i[0]
+        domain_name = i[1]
+        similarweb_ranking = i[2].split()[0]
+        semrush_visits = i[3]
+        category = i[4]
+        principal_country_territory = i[5]
+        sql_statement = f"INSERT INTO top_websites (site, domain_name, similarweb_ranking, semrush_visits, category, principal_country_territory) \
+                                            VALUES ('{site}','{domain_name}','{similarweb_ranking}','{semrush_visits}','{category}','{principal_country_territory}')"
+        database.sql_execute(sql_statement)
 
 if __name__ == "__main__":
     # import local_settings from parent directory
@@ -31,9 +53,10 @@ if __name__ == "__main__":
     parent = os.path.dirname(current)
     sys.path.append(parent)
     import local_settings
-
+    import database
+    import datetime
     import requests
     from bs4 import BeautifulSoup
     url = 'https://en.wikipedia.org/wiki/List_of_most_visited_websites'
 
-    main(10)
+    main()
