@@ -26,7 +26,9 @@ def get_top_websites():
         r = requests.get(url, proxies=proxies)
 
     soup = BeautifulSoup(r.text, 'html.parser')
-    table = soup.table
+    # table = soup.table
+    tables = soup.find_all('table')
+    table = tables[1]
 
     top_websites = []
     for tr in table.tbody.find_all('tr'):
