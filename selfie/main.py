@@ -28,7 +28,7 @@ def get_top_websites():
     soup = BeautifulSoup(r.text, 'html.parser')
     # table = soup.table
     tables = soup.find_all('table')
-    table = tables[1]
+    table = tables[0]
 
     top_websites = []
     for tr in table.tbody.find_all('tr'):
