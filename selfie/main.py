@@ -40,10 +40,10 @@ def get_top_websites():
     for i in top_websites:
         site = i[0]
         domain_name = i[1]
-        similarweb_ranking = i[2].split()[0]
+        similarweb_ranking = i[3].split()[0]
         # semrush_visits = i[3] the column is removed in wikipedia page
-        category = i[3]
-        principal_country_territory = i[4]
+        category = i[4]
+        principal_country_territory = i[5]
         sql_statement = f"INSERT INTO top_websites (site, domain_name, similarweb_ranking, category, principal_country_territory) \
                                             VALUES ('{site}','{domain_name}','{similarweb_ranking}','{category}','{principal_country_territory}')"
         database.sql_execute(sql_statement)
