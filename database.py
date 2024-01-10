@@ -8,8 +8,7 @@ def sql_execute(sql_statement):
         id INTEGER PRIMARY KEY AUTOINCREMENT, \
         site, \
         domain_name, \
-        similarweb_ranking, \
-        semrush_visits, \
+        ranking, \
         category, \
         principal_country_territory, \
         image, \
