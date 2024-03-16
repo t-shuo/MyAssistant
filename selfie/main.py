@@ -33,19 +33,21 @@ def get_top_websites():
     top_websites = []
     for tr in table.tbody.find_all('tr'):
         website = []
+        for th in tr.find_all('th'):
+            website.append(th.text.strip())
         for td in tr.find_all('td'):
             website.append(td.text.strip())
         if website:
             top_websites.append(website)
-    for i in top_websites:
+    for i in top_websites[2:]:
         site = i[0]
         domain_name = i[1]
-        semrush_ranking = i[2].split()[0]
-        similarweb_ranking = i[3].split()[0]
+        similarweb_ranking = i[2].split()[0]
+        semrush_ranking = i[3].split()[0]
         category = i[4]
-        principal_country_territory = i[5]
+        principal_country_territory = i[6]
         sql_statement = f"INSERT INTO top_websites (site, domain_name, ranking, category, principal_country_territory) \
-                                            VALUES ('{site}','{domain_name}','{semrush_ranking}','{category}','{principal_country_territory}')"
+                                            VALUES ('{site}','{domain_name}','{similarweb_ranking}','{category}','{principal_country_territory}')"
         database.sql_execute(sql_statement)
 
 if __name__ == "__main__":
